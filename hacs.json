@@ -1,0 +1,6 @@
+{
+    "name": "Silero TTS",
+    "homeassistant": "2022.6.6",
+    "zip_release": true,
+    "filename": "silero.zip"
+}

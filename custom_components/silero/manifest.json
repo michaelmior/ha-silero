@@ -1,0 +1,10 @@
+{
+  "domain": "silero",
+  "name": "Silero Text-to-Speech",
+  "documentation": "https://www.home-assistant.io/integrations/silero",
+  "issue_tracker": "https://github.com/michaelmior/ha-silero/issues",
+  "requirements": ["torch==1.11.0"],
+  "codeowners": [],
+  "iot_class": "calculated",
+  "loggers": ["silero"]
+}
