@@ -2,15 +2,15 @@
 import logging
 
 import os
+import tempfile
 import torch
+import voluptuous as vol
 
 from homeassistant.components.tts import CONF_LANG, PLATFORM_SCHEMA, Provider
 
 _LOGGER = logging.getLogger(__name__)
 
-SUPPORT_LANGUAGES = [
-    "en"
-]
+SUPPORT_LANGUAGES = ["en"]
 
 DEFAULT_LANG = "en"
 
@@ -19,7 +19,9 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_get_engine(hass, config, discovery_info=None):
+async def async_get_engine(
+    hass, config, discovery_info=None
+):  # pylint: disable=unused-argument
     """Set up Silero speech component."""
     return SileroProvider(hass, config[CONF_LANG])
 
@@ -34,9 +36,11 @@ class SileroProvider(Provider):
         self.name = "Silero"
 
         # Load Silero model
-        local_file = os.path.join(os.path.dirname(__file__), 'models 'v3_en.pt')
-        self.model = torch.package.PackageImporter(local_file).load_pickle('tts_models', 'model')
-        device = torch.device('cpu')
+        local_file = os.path.join(os.path.dirname(__file__), "models", "v3_en.pt")
+        self.model = torch.package.PackageImporter(local_file).load_pickle(
+            "tts_models", "model"
+        )
+        device = torch.device("cpu")  # pylint: disable=no-member
         self.model.to(device)
 
     @property
@@ -54,7 +58,9 @@ class SileroProvider(Provider):
         with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmpf:
             fname = tmpf.name
 
-        self.model.save_wav(message, speaker='en_0', sample_rate=48000, audio_path=fname)
+        self.model.save_wav(
+            message, speaker="en_0", sample_rate=48000, audio_path=fname
+        )
         data = None
         try:
             with open(fname, "rb") as voice:

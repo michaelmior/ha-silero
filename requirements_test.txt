@@ -7,4 +7,5 @@ isort
 pytest
 pytest-cov
 pytest-homeassistant-custom-component
+pytest-timeout
 homeassistant
